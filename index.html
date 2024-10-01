@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Attribution Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Attribution Generator</h1>
+    
+    <form id="attributionForm">
+        <fieldset>
+            <legend>Image Attribution Details</legend>
+            
+            <label for="photographerName">Photographer Name:</label>
+            <input type="text" id="photographerName" name="photographerName" required>
+            
+            <label for="imageLink">Link to Image:</label>
+            <input type="url" id="imageLink" name="imageLink" required>
+            
+            <label for="databaseName">Database Name:</label>
+            <input type="text" id="databaseName" name="databaseName" required>
+            
+            <label for="databaseLink">Link to Database:</label>
+            <input type="url" id="databaseLink" name="databaseLink" required>
+            
+            <label for="licenseName">License Name:</label>
+            <input type="text" id="licenseName" name="licenseName" required>
+            
+            <label for="licenseLink">Link to License:</label>
+            <input type="url" id="licenseLink" name="licenseLink" required>
+        </fieldset>
+        
+        <button type="submit">Generate Attribution</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('attributionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const photographerName = document.getElementById('photographerName').value;
+            const imageLink = document.getElementById('imageLink').value;
+            const databaseName = document.getElementById('databaseName').value;
+            const databaseLink = document.getElementById('databaseLink').value;
+            const licenseName = document.getElementById('licenseName').value;
+            const licenseLink = document.getElementById('licenseLink').value;
+
+            const attributionHtml = `
+                <div class="image-attribution">
+                    Photo by <a href="${imageLink}">${photographerName}</a>, 
+                    courtesy of <a href="${databaseLink}">${databaseName}</a>, 
+                    <a href="${licenseLink}">${licenseName}</a>
+                </div>
+            `;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>Generated Attribution:</h2>
+                <textarea rows="5" cols="50" readonly>${attributionHtml}</textarea>
+                <br>
+                <button id="copyButton">Copy to Clipboard</button>
+            `;
+
+            document.getElementById('copyButton').addEventListener('click', function() {
+                const textarea = resultDiv.querySelector('textarea');
+                textarea.select();
+                document.execCommand('copy');
+                alert('Copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>
